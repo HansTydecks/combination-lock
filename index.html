@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escape Room - Combination Lock</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Setup Screen -->
+    <div id="setup-screen" class="screen active">
+        <div class="setup-container">
+            <h1 class="title">🔐 Escape Room Lock</h1>
+            <p class="subtitle">Konfiguriere dein Zahlenschloss</p>
+            
+            <div class="setup-section">
+                <h2>📊 Schloss-Einstellungen</h2>
+                
+                <div class="form-group">
+                    <label for="digit-count">Anzahl der Stellen:</label>
+                    <input type="range" id="digit-count" min="3" max="8" value="4">
+                    <span id="digit-count-display" class="range-value">4</span>
+                </div>
+                
+                <div class="form-group">
+                    <label>Zeichentyp:</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="include-numbers" checked>
+                            <span class="checkmark"></span>
+                            Zahlen (0-9)
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="include-letters">
+                            <span class="checkmark"></span>
+                            Buchstaben (A-Z)
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="include-symbols">
+                            <span class="checkmark"></span>
+                            Sonderzeichen (!@#$)
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="combination-input">Geheimkombination:</label>
+                    <input type="text" id="combination-input" placeholder="z.B. 1234 oder A1B2" maxlength="8">
+                    <button id="random-combo-btn" class="btn-small">🎲 Zufällig</button>
+                </div>
+            </div>
+            
+            <div class="setup-section">
+                <h2>⏱️ Timer-Einstellungen</h2>
+                
+                <div class="form-group">
+                    <label for="timer-minutes">Zeit (Minuten):</label>
+                    <input type="number" id="timer-minutes" min="1" max="120" value="15">
+                </div>
+                
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="timer-enabled" checked>
+                        <span class="checkmark"></span>
+                        Timer aktivieren
+                    </label>
+                </div>
+                
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="timer-warning" checked>
+                        <span class="checkmark"></span>
+                        Warnung bei 1 Minute
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setup-section">
+                <h2>💬 Textnachrichten</h2>
+                
+                <div class="form-group">
+                    <label for="welcome-text">Willkommenstext:</label>
+                    <textarea id="welcome-text" rows="2">Knacke das Schloss, um den Schatz zu finden!</textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="win-text">Gewonnen-Text:</label>
+                    <textarea id="win-text" rows="2">🎉 Fantastisch! Du hast das Schloss geknackt und den Schatz gefunden!</textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="lose-text">Zeit abgelaufen-Text:</label>
+                    <textarea id="lose-text" rows="2">⏰ Die Zeit ist abgelaufen! Der Schatz bleibt verborgen...</textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="hint-text">Hinweis-Text (erscheint bei Klick auf Hinweis):</label>
+                    <textarea id="hint-text" rows="2">💡 Schau genauer hin... Die Lösung liegt näher als du denkst!</textarea>
+                </div>
+            </div>
+            
+            <div class="setup-section">
+                <h2>🎨 Design-Optionen</h2>
+                
+                <div class="form-group">
+                    <label>Farbschema:</label>
+                    <div class="color-options">
+                        <button class="color-btn active" data-theme="classic" style="background: linear-gradient(135deg, #1a1a2e, #16213e);">Klassisch</button>
+                        <button class="color-btn" data-theme="gold" style="background: linear-gradient(135deg, #2d1b00, #5c3d00);">Gold</button>
+                        <button class="color-btn" data-theme="cyber" style="background: linear-gradient(135deg, #0d0d0d, #1a0a2e);">Cyber</button>
+                        <button class="color-btn" data-theme="nature" style="background: linear-gradient(135deg, #0d1f0d, #1a3a1a);">Natur</button>
+                        <button class="color-btn" data-theme="ocean" style="background: linear-gradient(135deg, #001a33, #003366);">Ozean</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="custom-primary">Primärfarbe:</label>
+                    <input type="color" id="custom-primary" value="#00d4ff">
+                </div>
+                
+                <div class="form-group">
+                    <label for="custom-accent">Akzentfarbe:</label>
+                    <input type="color" id="custom-accent" value="#ff006e">
+                </div>
+                
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="show-hint-btn" checked>
+                        <span class="checkmark"></span>
+                        Hinweis-Button anzeigen
+                    </label>
+                </div>
+                
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="sound-enabled" checked>
+                        <span class="checkmark"></span>
+                        Soundeffekte aktivieren
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setup-section">
+                <h2>🔧 Erweiterte Optionen</h2>
+                
+                <div class="form-group">
+                    <label for="max-attempts">Max. Versuche (0 = unbegrenzt):</label>
+                    <input type="number" id="max-attempts" min="0" max="99" value="0">
+                </div>
+                
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="show-attempts">
+                        <span class="checkmark"></span>
+                        Versuche anzeigen
+                    </label>
+                </div>
+                
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="fullscreen-mode">
+                        <span class="checkmark"></span>
+                        Vollbildmodus beim Start
+                    </label>
+                </div>
+            </div>
+            
+            <button id="start-btn" class="btn-primary">🚀 Spiel starten</button>
+        </div>
+    </div>
+    
+    <!-- Game Screen -->
+    <div id="game-screen" class="screen">
+        <div class="game-header">
+            <div id="timer-display" class="timer">
+                <span class="timer-icon">⏱️</span>
+                <span id="time-remaining">15:00</span>
+            </div>
+            <div id="attempts-display" class="attempts hidden">
+                Versuche: <span id="attempts-count">0</span><span id="max-attempts-display"></span>
+            </div>
+        </div>
+        
+        <div id="welcome-message" class="message-box">
+            <p id="welcome-text-display"></p>
+            <button id="close-welcome" class="btn-small">Verstanden!</button>
+        </div>
+        
+        <div class="lock-container">
+            <div class="lock-body">
+                <div class="lock-shackle"></div>
+                <div id="combination-wheels" class="combination-wheels">
+                    <!-- Wheels werden dynamisch generiert -->
+                </div>
+                <div class="lock-keyhole"></div>
+            </div>
+        </div>
+        
+        <div class="game-controls">
+            <button id="check-btn" class="btn-primary">🔓 Prüfen</button>
+            <button id="hint-btn" class="btn-secondary">💡 Hinweis</button>
+            <button id="reset-btn" class="btn-secondary">🔄 Zurücksetzen</button>
+        </div>
+        
+        <button id="admin-btn" class="admin-btn">⚙️</button>
+    </div>
+    
+    <!-- Win Screen -->
+    <div id="win-screen" class="screen overlay">
+        <div class="result-container win">
+            <div class="confetti-container" id="confetti"></div>
+            <div class="treasure-chest">
+                <div class="chest-lid"></div>
+                <div class="chest-body">
+                    <div class="treasure-glow"></div>
+                    <span class="treasure-icon">💎</span>
+                </div>
+            </div>
+            <h1 class="result-title">GEWONNEN!</h1>
+            <p id="win-message" class="result-message"></p>
+            <div class="stats">
+                <p>Zeit benötigt: <span id="time-taken">00:00</span></p>
+                <p>Versuche: <span id="final-attempts">0</span></p>
+            </div>
+            <button id="play-again-btn" class="btn-primary">🔄 Nochmal spielen</button>
+            <button id="new-game-btn" class="btn-secondary">⚙️ Neues Spiel konfigurieren</button>
+        </div>
+    </div>
+    
+    <!-- Lose Screen -->
+    <div id="lose-screen" class="screen overlay">
+        <div class="result-container lose">
+            <div class="lock-icon-big">🔒</div>
+            <h1 class="result-title">ZEIT ABGELAUFEN!</h1>
+            <p id="lose-message" class="result-message"></p>
+            <p class="solution">Die Lösung war: <span id="solution-display"></span></p>
+            <button id="retry-btn" class="btn-primary">🔄 Nochmal versuchen</button>
+            <button id="new-game-btn-lose" class="btn-secondary">⚙️ Neues Spiel konfigurieren</button>
+        </div>
+    </div>
+    
+    <!-- Hint Modal -->
+    <div id="hint-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>💡 Hinweis</h2>
+            <p id="hint-text-display"></p>
+            <button id="close-hint" class="btn-primary">OK</button>
+        </div>
+    </div>
+    
+    <!-- Admin Modal -->
+    <div id="admin-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>⚙️ Admin-Menü</h2>
+            <p>Geheimkombination: <span id="admin-solution"></span></p>
+            <div class="admin-buttons">
+                <button id="admin-win" class="btn-small">Sofort gewinnen</button>
+                <button id="admin-add-time" class="btn-small">+5 Minuten</button>
+                <button id="admin-show-solution" class="btn-small">Lösung zeigen</button>
+                <button id="admin-end-game" class="btn-small">Spiel beenden</button>
+            </div>
+            <button id="close-admin" class="btn-secondary">Schließen</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
