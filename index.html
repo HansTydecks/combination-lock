@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escape Room - Combination Lock</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Setup Screen -->
@@ -15,39 +15,20 @@
             <p class="subtitle">Konfiguriere dein Zahlenschloss</p>
             
             <div class="setup-section">
-                <h2>📊 Schloss-Einstellungen</h2>
+                <h2>🔒 Anzahl der Schlösser</h2>
                 
                 <div class="form-group">
-                    <label for="digit-count">Anzahl der Stellen:</label>
-                    <input type="range" id="digit-count" min="3" max="8" value="4">
-                    <span id="digit-count-display" class="range-value">4</span>
+                    <label for="lock-count">Wie viele Schlösser?</label>
+                    <select id="lock-count" class="form-select">
+                        <option value="1" selected>1 Schloss</option>
+                        <option value="2">2 Schlösser</option>
+                        <option value="3">3 Schlösser</option>
+                        <option value="4">4 Schlösser</option>
+                    </select>
                 </div>
                 
-                <div class="form-group">
-                    <label>Zeichentyp:</label>
-                    <div class="checkbox-group">
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="include-numbers" checked>
-                            <span class="checkmark"></span>
-                            Zahlen (0-9)
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="include-letters">
-                            <span class="checkmark"></span>
-                            Buchstaben (A-Z)
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="include-symbols">
-                            <span class="checkmark"></span>
-                            Sonderzeichen (!@#$)
-                        </label>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="combination-input">Geheimkombination:</label>
-                    <input type="text" id="combination-input" placeholder="z.B. 1234 oder A1B2" maxlength="8">
-                    <button id="random-combo-btn" class="btn-small">🎲 Zufällig</button>
+                <div id="lock-settings-container">
+                    <!-- Wird dynamisch generiert -->
                 </div>
             </div>
             
@@ -187,14 +168,8 @@
             <button id="close-welcome" class="btn-small">Verstanden!</button>
         </div>
         
-        <div class="lock-container">
-            <div class="lock-body">
-                <div class="lock-shackle"></div>
-                <div id="combination-wheels" class="combination-wheels">
-                    <!-- Wheels werden dynamisch generiert -->
-                </div>
-                <div class="lock-keyhole"></div>
-            </div>
+        <div id="locks-wrapper" class="locks-wrapper">
+            <!-- Locks werden dynamisch generiert -->
         </div>
         
         <div class="game-controls">
@@ -249,11 +224,25 @@
         </div>
     </div>
     
+    <!-- Admin Password Modal -->
+    <div id="admin-password-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>🔑 Admin-Zugang</h2>
+            <p>Bitte Passwort eingeben:</p>
+            <div class="form-group">
+                <input type="password" id="admin-password-input" placeholder="Passwort" class="admin-password-field">
+            </div>
+            <p id="admin-password-error" class="error-text hidden">Falsches Passwort!</p>
+            <button id="admin-password-submit" class="btn-primary">Bestätigen</button>
+            <button id="admin-password-cancel" class="btn-secondary">Abbrechen</button>
+        </div>
+    </div>
+
     <!-- Admin Modal -->
     <div id="admin-modal" class="modal hidden">
         <div class="modal-content">
             <h2>⚙️ Admin-Menü</h2>
-            <p>Geheimkombination: <span id="admin-solution"></span></p>
+            <div id="admin-locks-info"></div>
             <div class="admin-buttons">
                 <button id="admin-win" class="btn-small">Sofort gewinnen</button>
                 <button id="admin-add-time" class="btn-small">+5 Minuten</button>
@@ -267,3 +256,4 @@
     <script src="app.js"></script>
 </body>
 </html>
+
